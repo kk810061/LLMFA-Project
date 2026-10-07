@@ -151,7 +151,7 @@ def model_fn(features, mode, bert_config, vocab, init_checkpoint, learning_rate,
     masked_lm_ids = features["masked_lm_ids"]
     masked_lm_weights = features["masked_lm_weights"]
 
-    is_training = (mode == tf.estimator.ModeKeys.TRAIN)
+    is_training = (mode == "train")
 
     model = modeling.BertModel(
         config=bert_config,
@@ -207,7 +207,7 @@ def model_fn(features, mode, bert_config, vocab, init_checkpoint, learning_rate,
         tf.logging.info("  name = %s, shape = %s%s", var.name, var.shape,
                         init_string)
 
-    if mode == tf.estimator.ModeKeys.TRAIN:
+    if mode == "train":
         train_op = optimization.create_optimizer(total_loss, learning_rate,
                                                  num_train_steps,
                                                  num_warmup_steps, use_tpu)
@@ -219,7 +219,7 @@ def model_fn(features, mode, bert_config, vocab, init_checkpoint, learning_rate,
         #     train_op=train_op,
         #     scaffold=scaffold_fn)
 
-    elif mode == tf.estimator.ModeKeys.EVAL:
+    elif mode == "eval":
 
         def metric_fn(masked_lm_example_loss, masked_lm_log_probs, masked_lm_ids, masked_lm_weights):
             """Computes the loss and accuracy of the model."""
@@ -435,13 +435,13 @@ def _decode_record(record, name_to_features):
 
 def main(_):
     if FLAGS.do_train:
-        mode = tf.estimator.ModeKeys.TRAIN
+        mode = "train"
         input_files = FLAGS.train_input_file
         # load data
         features = input_fn(input_files, is_training=True)
 
     elif FLAGS.do_eval:
-        mode = tf.estimator.ModeKeys.EVAL
+        mode = "eval"
         input_files = FLAGS.test_input_file
         features = input_fn(input_files, is_training=False)
 

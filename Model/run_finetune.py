@@ -108,7 +108,7 @@ def model_fn(features, mode, bert_config, vocab, init_checkpoint, learning_rate,
     input_values = features["input_values"]
     input_counts = features["input_counts"]
 
-    is_training = (mode == tf.estimator.ModeKeys.TRAIN)
+    is_training = (mode == "train")
 
     model = modeling.BertModel(
         config=bert_config,
@@ -186,14 +186,14 @@ def model_fn(features, mode, bert_config, vocab, init_checkpoint, learning_rate,
         tf.logging.info("  name = %s, shape = %s%s", var.name, var.shape,
                         init_string)
 
-    if mode == tf.estimator.ModeKeys.TRAIN:
+    if mode == "train":
         train_op = optimization.create_optimizer(total_loss, learning_rate,
                                                  num_train_steps,
                                                  num_warmup_steps, False)
 
         return model, train_op, total_loss
 
-    elif mode == tf.estimator.ModeKeys.EVAL:
+    elif mode == "eval":
 
         return model, y_hat, total_loss
 
@@ -213,7 +213,7 @@ def main(_):
         else:
             return 0.0
 
-    mode = tf.estimator.ModeKeys.TRAIN
+    mode = "train"
     train_input_files = FLAGS.train_input_file
     train_features = input_fn(train_input_files, is_training=True)
 
@@ -270,7 +270,7 @@ def main(_):
 
     if FLAGS.do_eval:
         # Evaluation
-        mode = tf.estimator.ModeKeys.EVAL
+        mode = "eval"
         test_input_files = FLAGS.test_input_file
         test_features = input_fn(test_input_files, is_training=False)
         # do not load checkpoint
