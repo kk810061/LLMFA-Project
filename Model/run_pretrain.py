@@ -317,14 +317,14 @@ def get_masked_lm_output_negative_sampling(bert_config, input_tensor,
     word_num = len(vocab.vocab_words) - 3
 
     if FLAGS.neg_strategy == "uniform":
-        neg_ids, _, _ = tf.nn.uniform_candidate_sampler(true_classes=[[len(vocab.vocab_words)]],
+        neg_ids, _, _ = tf.nn.uniform_candidate_sampler(true_classes=[[0]],
                                                         num_true=1,
                                                         num_sampled=FLAGS.neg_sample_num,
                                                         unique=True,
                                                         range_max=word_num)
 
     elif FLAGS.neg_strategy == "zip":
-        neg_ids, _, _ = tf.nn.log_uniform_candidate_sampler(true_classes=[[len(vocab.vocab_words)]],
+        neg_ids, _, _ = tf.nn.log_uniform_candidate_sampler(true_classes=[[0]],
                                                             num_true=1,
                                                             num_sampled=FLAGS.neg_sample_num,
                                                             unique=True,
@@ -332,7 +332,7 @@ def get_masked_lm_output_negative_sampling(bert_config, input_tensor,
 
     elif FLAGS.neg_strategy == "freq":
         # negative sample based on frequency
-        neg_ids, _, _ = tf.nn.fixed_unigram_candidate_sampler(true_classes=[[len(vocab.vocab_words)]],
+        neg_ids, _, _ = tf.nn.fixed_unigram_candidate_sampler(true_classes=[[0]],
                                                               num_true=1,
                                                               num_sampled=FLAGS.neg_sample_num,
                                                               unique=True,
