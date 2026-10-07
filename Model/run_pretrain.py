@@ -497,11 +497,13 @@ def main(_):
 
                     iter += 1
 
-                except Exception as e:
-                    # print("Out of Sequence, end of training...")
-                    print(e)
+                except tf.errors.OutOfRangeError:
+                    print("Out of Sequence, end of training...")
                     # save model
                     saver.save(sess, os.path.join(FLAGS.checkpointDir, "model_" + str(round(iter))))
+                    break
+                except Exception as e:
+                    print("Unexpected error:", e)
                     break
 
     elif FLAGS.do_eval:
