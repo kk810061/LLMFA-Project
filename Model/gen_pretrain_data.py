@@ -461,7 +461,7 @@ def main():
                                         MAX_PREDICTIONS_PER_SEQ, vocab,
                                         [output_filename])
 
-    seqs = np.random.permutation(seqs)
+    rng.shuffle(seqs)
 
     if FLAGS.do_eval:  # select 20% for testing
         print("========Generate Evaluation Samples========")

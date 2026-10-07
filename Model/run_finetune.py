@@ -23,6 +23,8 @@ sys.path.append("..")
 import optimization
 import collections
 import re
+import os
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 

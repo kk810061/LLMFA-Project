@@ -12,6 +12,8 @@ import re
 import six
 import numpy as np
 # import tensorflow as tf
+import os
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 
