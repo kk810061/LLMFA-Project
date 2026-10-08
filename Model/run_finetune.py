@@ -266,7 +266,7 @@ def main(_):
                 iter += 1
 
             except Exception as e:
-                print("Out of Sequence")
+                print("Out of Sequence:", type(e).__name__, str(e))
                 saver.save(sess, os.path.join(FLAGS.checkpointDir, "bert_finetune"))
                 break
 
@@ -286,6 +286,7 @@ def main(_):
         address_id_list = []
         y_hat_list = []
         label_list = []
+        losses = []
 
         iter = 0
         start = time.time()
@@ -305,7 +306,7 @@ def main(_):
                 iter += 1
 
             except Exception as e:
-                print("Out of Sequence")
+                print("Out of Sequence:", type(e).__name__, str(e))
                 # save model
                 # saver.save(sess, os.path.join(FLAGS.checkpointDir, "model_" + str(iter)))
                 break
@@ -336,6 +337,7 @@ def main(_):
         address_list = []
         agg_y_hat_list = []
         agg_label_list = []
+        losses = []
 
         for addr, pred_proba_list in address_to_pred_proba.items():
             address_list.append(addr)
