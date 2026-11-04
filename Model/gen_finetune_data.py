@@ -168,8 +168,7 @@ def write_finetune_instance_to_example_files(instances, max_seq_length, vocab, o
     writer_index = 0
     total_written = 0
 
-    for inst_index in tqdm(range(len(instances))):
-        instance = instances[inst_index]
+    for inst_index, instance in enumerate(tqdm(instances)):
         input_ids = vocab.convert_tokens_to_ids(instance.tokens)
         address = vocab.convert_tokens_to_ids(instance.address)
         counts = instance.cnts
@@ -238,6 +237,7 @@ def write_finetune_instance_to_example_files(instances, max_seq_length, vocab, o
         writer.close()
 
     tf.logging.info("Wrote %d total instances", total_written)
+    return total_written
 
 
 def total_repeat_drop(eoa2seq):

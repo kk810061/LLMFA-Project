@@ -291,4 +291,7 @@ def main():
 print("pause")
 
 if __name__ == '__main__':
-    main()
+    # Parse TensorFlow flags so callers can select the dataset and raw-data
+    # directory. The research split builder runs this script from a work
+    # directory separate from the Kaggle files.
+    tf.app.run(main=lambda _: main())

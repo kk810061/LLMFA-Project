@@ -50,3 +50,7 @@ python run_finetune.py --do_train=False --do_eval=True --init_checkpoint=ckpt_di
 The script will loop through the `finetune_test.tfrecord` dataset. Once it reaches the end of the sequence, it will print out the final Area Under the Curve (AUC) metric and classification reports for various thresholds (0.05 to 0.95). 
 
 A standard threshold of `0.5` should yield an AUC of **~0.9766**.
+
+## SageMaker PU and masked-prediction experiments
+
+The nnPU and pretrained masked-prediction experiments are implemented separately from the original supervised pipeline. For the SageMaker training job, S3 input layout, output artifacts, and local inference commands, see [`Model/SAGEMAKER_QUICKSTART.md`](Model/SAGEMAKER_QUICKSTART.md). The Kaggle data, pretrained `model_72402` checkpoint, and matching vocabulary are excluded from GitHub and must be staged as SageMaker inputs.

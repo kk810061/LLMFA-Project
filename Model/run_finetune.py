@@ -351,6 +351,8 @@ def main(_):
         # print("================ROC Curve====================")
         fpr, tpr, thresholds = roc_curve(agg_label_list, agg_y_hat_list, pos_label=1)
         print("AUC=", auc(fpr, tpr))
+        np.savez_compressed("eval_predictions.npz", fpr=fpr, tpr=tpr, thresholds=thresholds, y_true=agg_label_list, y_scores=agg_y_hat_list)
+        print("Saved eval_predictions.npz successfully!")
 
         print(np.sum(agg_label_list))
         print(np.sum(agg_y_hat_list))
